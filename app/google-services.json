@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "56507348071",
+    "firebase_url": "https://cs351-final-project.firebaseio.com",
+    "project_id": "cs351-final-project",
+    "storage_bucket": "cs351-final-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56507348071:android:df028531e77120ce0c90c2",
+        "android_client_info": {
+          "package_name": "kettering.cs351.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56507348071-03bb03kls62on05re7a0u06j6lr5tk4b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmTnnJHd7kzh50tK0LPx55A7UEiYTUtvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56507348071-03bb03kls62on05re7a0u06j6lr5tk4b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
