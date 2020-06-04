@@ -1,8 +1,10 @@
 package kettering.cs351.project;
 
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -13,6 +15,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class PostRepo implements Serializable {
     private final String TAG = "PostRepo";
@@ -38,6 +41,12 @@ public class PostRepo implements Serializable {
                                 Log.i(TAG, "Added post to list");
                             }
                         }
+                        posts.sort(new Comparator<Post>() {
+                            @Override
+                            public int compare(Post o1, Post o2) {
+                                return Double.compare(o1.time, o2.time);
+                            }
+                        });
                         callback.FirestoreGetComplete();
                     }
                 });
