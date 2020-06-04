@@ -1,21 +1,22 @@
 package kettering.cs351.project;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LaunchActivity extends AppCompatActivity {
+public class LaunchActivity extends AppCompatActivity implements PostRepo.OnCompleteCallback {
     private final String TAG = "LaunchActivity";
     private FirebaseAuth mAuth;
+    private PostRepo mRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,9 @@ public class LaunchActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "onStart: User already signed in");
         }
+        mRepo = new PostRepo((PostRepo.OnCompleteCallback) this);
+
+
     }
 
     private void signInAnonymously() {
@@ -56,5 +60,12 @@ public class LaunchActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void FirestoreGetComplete() {
+        Intent intent = new Intent(this, PostListActivity.class);
+        intent.putExtra("posts", mRepo.posts);
+        startActivity(intent);
     }
 }

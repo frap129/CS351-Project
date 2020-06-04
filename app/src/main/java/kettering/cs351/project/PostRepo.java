@@ -1,7 +1,8 @@
 package kettering.cs351.project;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
-import androidx.databinding.ObservableArrayList;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -10,15 +11,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class PostRepo {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class PostRepo implements Serializable {
     private final String TAG = "PostRepo";
     public final String POST_COLLECTION = "posts";
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public String uid = FirebaseAuth.getInstance().getUid();
-    public ObservableArrayList<Post> ownPosts = new ObservableArrayList<>();
-    public ObservableArrayList<Post> posts = new ObservableArrayList<>();
+    public ArrayList<Post> ownPosts = new ArrayList<>();
+    public ArrayList<Post> posts = new ArrayList<>();
 
-    public PostRepo() {
+    public PostRepo(final OnCompleteCallback callback) {
         db.collection(POST_COLLECTION)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -30,8 +34,11 @@ public class PostRepo {
                                     ownPosts.add(documentToPost(document));
                                 else
                                     posts.add(documentToPost(document));
+
+                                Log.i(TAG, "Added post to list");
                             }
                         }
+                        callback.FirestoreGetComplete();
                     }
                 });
     }
@@ -40,5 +47,9 @@ public class PostRepo {
         return new Post((String) doc.get("author"), (String) doc.get("authorID"),
                 doc.getLong("dislikes").intValue(), doc.getLong("likes").intValue(), (String) doc.get("post"),
                 doc.getDouble("time"));
+    }
+
+    interface OnCompleteCallback {
+        void FirestoreGetComplete();
     }
 }

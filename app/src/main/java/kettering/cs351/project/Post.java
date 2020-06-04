@@ -1,6 +1,8 @@
 package kettering.cs351.project;
 
-public class Post {
+import java.io.Serializable;
+
+public class Post implements Serializable {
     public String author = "";
     public String authorID = "";
     public int dislikes = 0;
@@ -15,8 +17,5 @@ public class Post {
         this.likes = likes;
         this.post = post;
         this.time = time;
-    }
-
-    public Post() {
     }
 }
