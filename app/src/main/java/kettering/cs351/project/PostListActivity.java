@@ -20,8 +20,11 @@ public class PostListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postlist);
 
+        // Get the list of posts from launch activity
         Intent launcher = getIntent();
         mPosts = (ArrayList<Post>) launcher.getSerializableExtra("posts");
+
+        // Build the recyclerview to display posts
         mList = (RecyclerView) findViewById(R.id.postList);
         mList.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new PostListAdapter(this, mPosts);

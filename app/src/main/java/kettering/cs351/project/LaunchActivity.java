@@ -40,9 +40,9 @@ public class LaunchActivity extends AppCompatActivity implements PostRepo.OnComp
         } else {
             Log.d(TAG, "onStart: User already signed in");
         }
+
+        // Start the repo to fetch data, pass callback so we know when its complete
         mRepo = new PostRepo((PostRepo.OnCompleteCallback) this);
-
-
     }
 
     private void signInAnonymously() {
@@ -64,6 +64,7 @@ public class LaunchActivity extends AppCompatActivity implements PostRepo.OnComp
 
     @Override
     public void FirestoreGetComplete() {
+        // Now that repo has fetched all posts, start the post list activity
         Intent intent = new Intent(this, PostListActivity.class);
         intent.putExtra("posts", mRepo.posts);
         startActivity(intent);

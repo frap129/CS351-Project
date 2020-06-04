@@ -26,38 +26,45 @@ public class PostRepo implements Serializable {
     public ArrayList<Post> posts = new ArrayList<>();
 
     public PostRepo(final OnCompleteCallback callback) {
+        // Get all posts from Firestore
         db.collection(POST_COLLECTION)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful() && task.getResult() != null) {
+
+                            // For each posts, filter out the users own and format them into lists
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.get("authorID").equals(uid))
                                     ownPosts.add(documentToPost(document));
                                 else
                                     posts.add(documentToPost(document));
-
-                                Log.i(TAG, "Added post to list");
                             }
                         }
+
+                        // Sort posts by newest to oldest
                         posts.sort(new Comparator<Post>() {
                             @Override
                             public int compare(Post o1, Post o2) {
                                 return Double.compare(o1.time, o2.time);
                             }
                         });
+
+                        // Execute callback to inform of completion.
                         callback.FirestoreGetComplete();
                     }
                 });
     }
 
+    // Simple function to build a Post object from a Firebase Document Snapshot
     private Post documentToPost(QueryDocumentSnapshot doc) {
         return new Post((String) doc.get("author"), (String) doc.get("authorID"),
                 doc.getLong("dislikes").intValue(), doc.getLong("likes").intValue(), (String) doc.get("post"),
                 doc.getDouble("time"));
     }
 
+    // Callback interface for notifying when fetch is complete
     interface OnCompleteCallback {
         void FirestoreGetComplete();
     }

@@ -26,6 +26,7 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Designate that all posts use the item_post layout
         View view = mInflater.inflate(R.layout.item_post, parent, false);
 
         return new RecyclerView.ViewHolder(view) {
@@ -38,6 +39,7 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        // Build Post UI for a given list item
         Post post = mPosts.get(position);
         TextView postText = holder.itemView.findViewById(R.id.postText);
         postText.setText(post.post);
