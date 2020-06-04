@@ -16,12 +16,10 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final String TAG = "PostListAdapter";
     private LayoutInflater mInflater;
     private ArrayList<Post> mPosts;
-    private Context mContext;
 
     public PostListAdapter(Context context, ArrayList<Post> posts) {
         mInflater = LayoutInflater.from(context);
         mPosts = posts;
-        mContext = context;
         Log.d(TAG, "Created PostListAdapter");
     }
 
@@ -43,6 +41,8 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         Post post = mPosts.get(position);
         TextView postText = holder.itemView.findViewById(R.id.postText);
         postText.setText(post.post);
+        TextView postAuthor = holder.itemView.findViewById(R.id.postAuthor);
+        postAuthor.setText(post.author);
         Log.d(TAG, "Bound ViewHolder for item " + position);
 
     }
