@@ -21,8 +21,6 @@ public class PostRepo implements Serializable {
     private final String TAG = "PostRepo";
     public final String POST_COLLECTION = "posts";
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public String uid = FirebaseAuth.getInstance().getUid();
-    public ArrayList<Post> ownPosts = new ArrayList<>();
     public ArrayList<Post> posts = new ArrayList<>();
 
     public PostRepo(final OnCompleteCallback callback) {
@@ -36,9 +34,6 @@ public class PostRepo implements Serializable {
 
                             // For each posts, filter out the users own and format them into lists
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.get("authorID").equals(uid))
-                                    ownPosts.add(documentToPost(document));
-                                else
                                     posts.add(documentToPost(document));
                             }
                         }
@@ -47,7 +42,7 @@ public class PostRepo implements Serializable {
                         posts.sort(new Comparator<Post>() {
                             @Override
                             public int compare(Post o1, Post o2) {
-                                return Double.compare(o1.time, o2.time);
+                                return Long.compare(o2.time, o1.time);
                             }
                         });
 
