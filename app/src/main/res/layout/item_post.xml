@@ -7,10 +7,24 @@
 
         <TextView
             android:id="@+id/postAuthor"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="author"
+            android:textStyle="bold"
+            android:textAlignment="viewStart"
+            android:layout_marginVertical="@dimen/postItemVertMargin"
+            android:layout_marginHorizontal="@dimen/postItemSideMargin"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:id="@+id/postTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="time posted"
+            android:textAlignment="viewEnd"
+            android:layout_marginVertical="@dimen/postItemVertMargin"
+            android:layout_marginHorizontal="@dimen/postItemSideMargin"
+            app:layout_constraintStart_toEndOf="@id/postAuthor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -19,6 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="this is a test post"
+            android:layout_marginVertical="@dimen/postItemVertMargin"
+            android:layout_marginHorizontal="@dimen/postItemSideMargin"
             app:layout_constraintTop_toBottomOf="@id/postAuthor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -27,6 +43,7 @@
             android:id="@+id/divider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/postText"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

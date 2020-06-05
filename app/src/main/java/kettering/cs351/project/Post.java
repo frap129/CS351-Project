@@ -8,9 +8,9 @@ public class Post implements Serializable {
     public int dislikes = 0;
     public int likes = 0;
     public String post = "";
-    public double time = 0.0;
+    public long time = 0;
 
-    public Post(String author, String authorID, int dislikes, int likes, String post, double time) {
+    public Post(String author, String authorID, int dislikes, int likes, String post, long time) {
         this.author = author;
         this.authorID = authorID;
         this.dislikes = dislikes;

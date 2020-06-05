@@ -61,7 +61,7 @@ public class PostRepo implements Serializable {
     private Post documentToPost(QueryDocumentSnapshot doc) {
         return new Post((String) doc.get("author"), (String) doc.get("authorID"),
                 doc.getLong("dislikes").intValue(), doc.getLong("likes").intValue(), (String) doc.get("post"),
-                doc.getDouble("time"));
+                doc.getLong("time"));
     }
 
     // Callback interface for notifying when fetch is complete

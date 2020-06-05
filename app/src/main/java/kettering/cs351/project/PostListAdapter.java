@@ -10,7 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final String TAG = "PostListAdapter";
@@ -41,12 +44,27 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         // Build Post UI for a given list item
         Post post = mPosts.get(position);
+
+        // Set Post text
         TextView postText = holder.itemView.findViewById(R.id.postText);
         postText.setText(post.post);
+
+        // Set post author
         TextView postAuthor = holder.itemView.findViewById(R.id.postAuthor);
         postAuthor.setText(post.author);
-        Log.d(TAG, "Bound ViewHolder for item " + position);
 
+        // Set post time
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(post.time);
+        SimpleDateFormat format;
+        if (cal.getTime().getDate() == Calendar.getInstance().getTime().getDate())
+            format = new SimpleDateFormat("h:mm a", Locale.getDefault());
+        else
+            format = new SimpleDateFormat("M/d/yy, h:mm a", Locale.getDefault());
+        TextView postTime = holder.itemView.findViewById(R.id.postTime);
+        postTime.setText(format.format(cal.getTime()));
+
+        Log.d(TAG, "Bound ViewHolder for item " + position);
     }
 
     @Override
