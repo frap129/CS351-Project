@@ -2,4 +2,5 @@
 <resources>
     <dimen name="postItemSideMargin">8dp</dimen>
     <dimen name="postItemVertMargin">4dp</dimen>
+    <dimen name="dialogCornerRadius">8dp</dimen>
 </resources>

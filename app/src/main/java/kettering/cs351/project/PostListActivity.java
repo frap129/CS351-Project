@@ -3,10 +3,14 @@ package kettering.cs351.project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -30,5 +34,16 @@ public class PostListActivity extends AppCompatActivity {
         mAdapter = new PostListAdapter(this, mPosts);
         Log.i(TAG, "List size: " + mPosts.size());
         mList.setAdapter(mAdapter);
+
+        // Setup new post FAB
+        FloatingActionButton newPost = (FloatingActionButton) findViewById(R.id.newPost);
+        newPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                NewPostFragment postWindow = new NewPostFragment();
+                postWindow.show(transaction, "New Post");
+            }
+        });
     }
 }
