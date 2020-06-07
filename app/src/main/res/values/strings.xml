@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CS351 Final Project</string>
+    <string name="author">author</string>
 </resources>

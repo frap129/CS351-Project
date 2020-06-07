@@ -1,5 +1,6 @@
 package kettering.cs351.project;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PostListActivity extends AppCompatActivity {
     private String TAG = "PostListActivity";
@@ -35,13 +37,16 @@ public class PostListActivity extends AppCompatActivity {
         Log.i(TAG, "List size: " + mPosts.size());
         mList.setAdapter(mAdapter);
 
+        final String name = getSharedPreferences(getString(R.string.author), Context.MODE_PRIVATE)
+                .getString(getString(R.string.author), "Anonymous Poster");
+
         // Setup new post FAB
         FloatingActionButton newPost = (FloatingActionButton) findViewById(R.id.newPost);
         newPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                NewPostFragment postWindow = new NewPostFragment();
+                NewPostFragment postWindow = new NewPostFragment(name);
                 postWindow.show(transaction, "New Post");
             }
         });

@@ -2,6 +2,8 @@ package kettering.cs351.project;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +18,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class NewPostFragment extends DialogFragment {
-    public NewPostFragment() {
-
+    private String mAuthorName;
+    public Post mPost;
+    public NewPostFragment(String name) {
+        mAuthorName = name;
     }
 
     @NonNull
@@ -39,7 +44,7 @@ public class NewPostFragment extends DialogFragment {
                 String post = input.getEditText().getText().toString();
                 if (!post.isEmpty()) {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    Post newPost = new Post("Author name WIP",
+                    Post newPost = new Post(mAuthorName,
                             FirebaseAuth.getInstance().getUid(), 0, 0, post,
                             Calendar.getInstance().getTimeInMillis());
                     db.collection("posts").document().set(newPost, SetOptions.merge());
