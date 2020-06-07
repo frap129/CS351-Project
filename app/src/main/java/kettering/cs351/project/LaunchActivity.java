@@ -16,10 +16,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
-
-import java.util.Calendar;
 
 public class LaunchActivity extends AppCompatActivity implements PostRepo.OnCompleteCallback {
     private final String TAG = "LaunchActivity";
