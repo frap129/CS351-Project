@@ -19,9 +19,10 @@ import java.util.Calendar;
 
 public class NewPostFragment extends DialogFragment {
     private String mAuthorName;
-    public Post mPost;
-    public NewPostFragment(String name) {
+    private OnPostCallback mCallback;
+    public NewPostFragment(String name, OnPostCallback callback) {
         mAuthorName = name;
+        mCallback = callback;
     }
 
     @NonNull
@@ -46,9 +47,15 @@ public class NewPostFragment extends DialogFragment {
                             Calendar.getInstance().getTimeInMillis());
                     db.collection("posts").document().set(newPost, SetOptions.merge());
                     dialog.dismiss();
+                    mCallback.PostComplete(newPost);
                 }
             }
         });
         return dialog;
+    }
+
+    // Callback interface for notifying when fetch is complete
+    interface OnPostCallback {
+        void PostComplete(Post newPost);
     }
 }

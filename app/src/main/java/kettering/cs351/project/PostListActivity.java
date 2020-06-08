@@ -14,8 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class PostListActivity extends AppCompatActivity {
+public class PostListActivity extends AppCompatActivity implements NewPostFragment.OnPostCallback {
     private String TAG = "PostListActivity";
     private ArrayList<Post> mPosts;
     private RecyclerView mList;
@@ -39,15 +40,28 @@ public class PostListActivity extends AppCompatActivity {
         final String name = getSharedPreferences(getString(R.string.author), Context.MODE_PRIVATE)
                 .getString(getString(R.string.author), "Anonymous Poster");
 
+        final NewPostFragment.OnPostCallback callback = this;
         // Setup new post FAB
         FloatingActionButton newPost = (FloatingActionButton) findViewById(R.id.newPost);
         newPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                NewPostFragment postWindow = new NewPostFragment(name);
+                NewPostFragment postWindow = new NewPostFragment(name, callback);
                 postWindow.show(transaction, "New Post");
             }
         });
+    }
+
+    @Override
+    public void PostComplete(Post newPost) {
+        mPosts.add(newPost);
+        mPosts.sort(new Comparator<Post>() {
+            @Override
+            public int compare(Post o1, Post o2) {
+                return Long.compare(o2.time, o1.time);
+            }
+        });
+        mAdapter.notifyDataSetChanged();
     }
 }
