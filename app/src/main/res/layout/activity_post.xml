@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/postAuthor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="id/postAuthor"
+        android:textStyle="bold"
+        android:textAlignment="viewStart"
+        android:layout_marginVertical="@dimen/postItemVertMargin"
+        android:layout_marginHorizontal="@dimen/postItemSideMargin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/postTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="id/postTime"
+        android:textAlignment="viewEnd"
+        android:layout_marginVertical="@dimen/postItemVertMargin"
+        android:layout_marginHorizontal="@dimen/postItemSideMargin"
+        app:layout_constraintStart_toEndOf="@id/postAuthor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/postText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="id/postText"
+        android:textAlignment="center"
+        android:layout_marginVertical="@dimen/postItemVertMargin"
+        android:layout_marginHorizontal="@dimen/postItemSideMargin"
+        app:layout_constraintTop_toBottomOf="@id/postAuthor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

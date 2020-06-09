@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".PostListActivity" />
+        <activity android:name=".PostActivity" />
     </application>
 
 </manifest>

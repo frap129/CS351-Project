@@ -19,10 +19,12 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final String TAG = "PostListAdapter";
     private LayoutInflater mInflater;
     private ArrayList<Post> mPosts;
+    private PostClickCallback mCallback;
 
-    public PostListAdapter(Context context, ArrayList<Post> posts) {
+    public PostListAdapter(Context context, ArrayList<Post> posts, PostClickCallback callback) {
         mInflater = LayoutInflater.from(context);
         mPosts = posts;
+        mCallback = callback;
         Log.d(TAG, "Created PostListAdapter");
     }
 
@@ -41,7 +43,7 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         // Build Post UI for a given list item
         Post post = mPosts.get(position);
 
@@ -64,11 +66,22 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView postTime = holder.itemView.findViewById(R.id.postTime);
         postTime.setText(format.format(cal.getTime()));
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onPostClick(position);
+            }
+        });
+
         Log.d(TAG, "Bound ViewHolder for item " + position);
     }
 
     @Override
     public int getItemCount() {
         return mPosts.size();
+    }
+
+    interface PostClickCallback {
+        void onPostClick(int position);
     }
 }

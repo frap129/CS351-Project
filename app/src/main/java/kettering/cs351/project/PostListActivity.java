@@ -16,7 +16,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class PostListActivity extends AppCompatActivity implements NewPostFragment.OnPostCallback {
+public class PostListActivity extends AppCompatActivity
+        implements NewPostFragment.OnPostCallback, PostListAdapter.PostClickCallback {
     private String TAG = "PostListActivity";
     private ArrayList<Post> mPosts;
     private RecyclerView mList;
@@ -33,7 +34,7 @@ public class PostListActivity extends AppCompatActivity implements NewPostFragme
         // Build the recyclerview to display posts
         mList = (RecyclerView) findViewById(R.id.postList);
         mList.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new PostListAdapter(this, mPosts);
+        mAdapter = new PostListAdapter(this, mPosts, this);
         Log.i(TAG, "List size: " + mPosts.size());
         mList.setAdapter(mAdapter);
 
@@ -42,7 +43,7 @@ public class PostListActivity extends AppCompatActivity implements NewPostFragme
 
         final NewPostFragment.OnPostCallback callback = this;
         // Setup new post FAB
-        FloatingActionButton newPost = (FloatingActionButton) findViewById(R.id.newPost);
+        FloatingActionButton newPost = findViewById(R.id.newPost);
         newPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,5 +64,12 @@ public class PostListActivity extends AppCompatActivity implements NewPostFragme
             }
         });
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPostClick(int position) {
+        Intent intent = new Intent(this, PostActivity.class);
+        intent.putExtra("post", mPosts.get(position));
+        startActivity(intent);
     }
 }
