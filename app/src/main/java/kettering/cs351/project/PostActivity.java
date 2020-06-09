@@ -1,11 +1,19 @@
 package kettering.cs351.project;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -40,6 +48,34 @@ public class PostActivity extends AppCompatActivity {
             format = new SimpleDateFormat("M/d/yy, h:mm a", Locale.getDefault());
         TextView postTime = findViewById(R.id.postTime);
         postTime.setText(format.format(cal.getTime()));
+
+        // Build list of comments
+        RecyclerView list = findViewById(R.id.commentList);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        final CommentListAdapter adapter = new CommentListAdapter(this, mPost.comments);
+        list.setAdapter(adapter);
+
+        final String name = getSharedPreferences(getString(R.string.author), Context.MODE_PRIVATE)
+                .getString(getString(R.string.author), "Anonymous Commenter");
+
+        final TextInputLayout input = findViewById(R.id.newCommentInput);
+        input.setEndIconDrawable(R.drawable.send);
+        input.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String comment = input.getEditText().getText().toString();
+                if (!comment.isEmpty()) {
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    Comment newComment = new Comment(name, Calendar.getInstance().getTimeInMillis(),
+                            comment);
+                    mPost.comments.add(newComment.toString());
+                    db.collection("posts")
+                            .document(mPost.authorID + "+" + mPost.time)
+                            .set(mPost, SetOptions.merge());
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
 
     }
 }

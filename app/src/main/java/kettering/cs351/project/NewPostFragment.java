@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class NewPostFragment extends DialogFragment {
@@ -44,8 +45,10 @@ public class NewPostFragment extends DialogFragment {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     Post newPost = new Post(mAuthorName,
                             FirebaseAuth.getInstance().getUid(), 0, 0, post,
-                            Calendar.getInstance().getTimeInMillis());
-                    db.collection("posts").document().set(newPost, SetOptions.merge());
+                            Calendar.getInstance().getTimeInMillis(), new ArrayList<String>());
+                    db.collection("posts")
+                            .document(newPost.authorID + "+" + newPost.time)
+                            .set(newPost, SetOptions.merge());
                     dialog.dismiss();
                     mCallback.PostComplete(newPost);
                 }

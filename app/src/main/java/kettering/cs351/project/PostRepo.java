@@ -11,6 +11,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class PostRepo implements Serializable {
     private final String TAG = "PostRepo";
@@ -51,7 +52,7 @@ public class PostRepo implements Serializable {
     private Post documentToPost(QueryDocumentSnapshot doc) {
         return new Post((String) doc.get("author"), (String) doc.get("authorID"),
                 doc.getLong("dislikes").intValue(), doc.getLong("likes").intValue(), (String) doc.get("post"),
-                doc.getLong("time"));
+                doc.getLong("time"),  (List<String>) doc.get("comments"));
     }
 
     // Callback interface for notifying when fetch is complete
