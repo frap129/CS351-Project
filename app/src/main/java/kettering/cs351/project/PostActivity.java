@@ -73,6 +73,7 @@ public class PostActivity extends AppCompatActivity {
                             .document(mPost.authorID + "+" + mPost.time)
                             .set(mPost, SetOptions.merge());
                     adapter.notifyDataSetChanged();
+                    input.getEditText().setText("");
                 }
             }
         });
