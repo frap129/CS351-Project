@@ -34,7 +34,10 @@
             android:layout_height="wrap_content"
             android:text="this is a test post"
             android:layout_marginVertical="@dimen/postItemVertMargin"
-            android:layout_marginHorizontal="@dimen/postItemSideMargin"
+            android:layout_marginStart="@dimen/postItemSideMargin"
+            android:layout_marginEnd="@dimen/postItemSideMargin"
+            android:paddingStart="@dimen/postItemSideMargin"
+            android:paddingEnd="@dimen/postItemSideMargin"
             app:layout_constraintTop_toBottomOf="@id/postAuthor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

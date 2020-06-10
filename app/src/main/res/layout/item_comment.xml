@@ -12,38 +12,40 @@
             android:text="author"
             android:textStyle="bold"
             android:textAlignment="viewStart"
-            android:layout_marginVertical="@dimen/postItemVertMargin"
+            android:layout_marginVertical="@dimen/postItemSideMargin"
             android:layout_marginHorizontal="@dimen/postItemSideMargin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/commentTime"/>
         <TextView
             android:id="@+id/commentTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="time posted"
             android:textAlignment="viewEnd"
-            android:layout_marginVertical="@dimen/postItemVertMargin"
+            android:layout_marginVertical="@dimen/postItemSideMargin"
             android:layout_marginHorizontal="@dimen/postItemSideMargin"
-            app:layout_constraintStart_toEndOf="@id/commentAuthor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/commentAuthor"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/commentText"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="this is a test post"
             android:layout_marginVertical="@dimen/postItemVertMargin"
             android:layout_marginHorizontal="@dimen/postItemSideMargin"
-            app:layout_constraintTop_toBottomOf="@id/commentAuthor"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/commentTime"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <View style="@style/Divider"
             android:id="@+id/divider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/commentText"
+            app:layout_constraintTop_toBottomOf="@id/commentTime"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

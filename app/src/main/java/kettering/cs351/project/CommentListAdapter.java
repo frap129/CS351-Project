@@ -62,7 +62,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             if (cal.getTime().getDate() == Calendar.getInstance().getTime().getDate())
                 format = new SimpleDateFormat("h:mm a", Locale.getDefault());
             else
-                format = new SimpleDateFormat("M/d/yy, h:mm a", Locale.getDefault());
+                format = new SimpleDateFormat("M/d/yy", Locale.getDefault());
             TextView commentTime = holder.itemView.findViewById(R.id.commentTime);
             commentTime.setText(format.format(cal.getTime()));
         } catch (JSONException e) {
