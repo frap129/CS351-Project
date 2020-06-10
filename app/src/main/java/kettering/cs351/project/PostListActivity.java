@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.function.Predicate;
 
 public class PostListActivity extends AppCompatActivity
         implements NewPostFragment.OnPostCallback, PostListAdapter.PostClickCallback {
@@ -70,6 +71,34 @@ public class PostListActivity extends AppCompatActivity
     public void onPostClick(int position) {
         Intent intent = new Intent(this, PostActivity.class);
         intent.putExtra("post", mPosts.get(position));
-        startActivity(intent);
+        startActivityForResult(intent, 420);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 420 && resultCode == RESULT_OK && data != null) {
+            final Post updated = (Post) data.getSerializableExtra("post");
+
+            // Remove post that got updated
+            mPosts.removeIf(new Predicate<Post>() {
+                @Override
+                public boolean test(Post post) {
+                    return post.time == updated.time && post.authorID.equals(updated.authorID);
+                }
+            });
+
+            // Add updated post
+            mPosts.add(updated);
+
+            // Sort list to maintain the same order
+            mPosts.sort(new Comparator<Post>() {
+                @Override
+                public int compare(Post o1, Post o2) {
+                    return Long.compare(o2.time, o1.time);
+                }
+            });
+            mAdapter.notifyDataSetChanged();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

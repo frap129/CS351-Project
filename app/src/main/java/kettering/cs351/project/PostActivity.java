@@ -79,4 +79,12 @@ public class PostActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent output = new Intent();
+        output.putExtra("post", mPost);
+        setResult(RESULT_OK, output);
+        finish();
+    }
 }
