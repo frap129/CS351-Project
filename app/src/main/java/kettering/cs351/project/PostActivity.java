@@ -23,7 +23,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static kettering.cs351.project.Constants.*;
+import static kettering.cs351.project.Constants.collection;
+import static kettering.cs351.project.Constants.defCommenter;
+import static kettering.cs351.project.Constants.oldLongFormat;
+import static kettering.cs351.project.Constants.postExtra;
+import static kettering.cs351.project.Constants.todayFormat;
 
 public class PostActivity extends AppCompatActivity {
     private Post mPost;

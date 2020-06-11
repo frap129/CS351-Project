@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static kettering.cs351.project.Constants.*;
+import static kettering.cs351.project.Constants.collection;
 
 public class PostRepo implements Serializable {
     private final String TAG = "PostRepo";

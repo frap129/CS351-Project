@@ -17,7 +17,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
-import static kettering.cs351.project.Constants.*;
+import static kettering.cs351.project.Constants.defPoster;
+import static kettering.cs351.project.Constants.listExtra;
+import static kettering.cs351.project.Constants.postExtra;
+import static kettering.cs351.project.Constants.postReturn;
+import static kettering.cs351.project.Constants.postTransact;
 
 public class PostListActivity extends AppCompatActivity
         implements NewPostFragment.OnPostCallback, PostListAdapter.PostClickCallback {

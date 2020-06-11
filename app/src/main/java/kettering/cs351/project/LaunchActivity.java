@@ -17,7 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import static kettering.cs351.project.Constants.*;
+import static kettering.cs351.project.Constants.listExtra;
 
 public class LaunchActivity extends AppCompatActivity implements PostRepo.OnCompleteCallback {
     private final String TAG = "LaunchActivity";

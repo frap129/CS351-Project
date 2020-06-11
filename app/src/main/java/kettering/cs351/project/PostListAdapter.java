@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static kettering.cs351.project.Constants.*;
+import static kettering.cs351.project.Constants.oldShortFormat;
+import static kettering.cs351.project.Constants.postListSizeLimit;
+import static kettering.cs351.project.Constants.todayFormat;
 
 public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final String TAG = "PostListAdapter";

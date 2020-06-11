@@ -19,7 +19,9 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import static kettering.cs351.project.Constants.*;
+import static kettering.cs351.project.Constants.collection;
+import static kettering.cs351.project.Constants.defPoster;
+import static kettering.cs351.project.Constants.defUID;
 
 public class NewPostFragment extends DialogFragment {
     private String mAuthorName;
