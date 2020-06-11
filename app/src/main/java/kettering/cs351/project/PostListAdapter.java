@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static kettering.cs351.project.Constants.*;
+
 public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final String TAG = "PostListAdapter";
     private LayoutInflater mInflater;
@@ -49,8 +51,8 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         // Set Post text
         TextView postText = holder.itemView.findViewById(R.id.postText);
-        String trimmedPost = post.post.substring(0, Math.min(post.post.length(), 280));
-        if (post.post.length() > 280)
+        String trimmedPost = post.post.substring(0, Math.min(post.post.length(), postListSizeLimit));
+        if (post.post.length() > postListSizeLimit)
             trimmedPost += "...";
         postText.setText(trimmedPost);
 
@@ -63,9 +65,9 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         cal.setTimeInMillis(post.time);
         SimpleDateFormat format;
         if (cal.getTime().getDate() == Calendar.getInstance().getTime().getDate())
-            format = new SimpleDateFormat("h:mm a", Locale.getDefault());
+            format = new SimpleDateFormat(todayFormat, Locale.getDefault());
         else
-            format = new SimpleDateFormat("M/d/yy, h:mm a", Locale.getDefault());
+            format = new SimpleDateFormat(oldShortFormat, Locale.getDefault());
         TextView postTime = holder.itemView.findViewById(R.id.postTime);
         postTime.setText(format.format(cal.getTime()));
 

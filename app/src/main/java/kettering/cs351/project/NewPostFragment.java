@@ -19,6 +19,8 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static kettering.cs351.project.Constants.*;
+
 public class NewPostFragment extends DialogFragment {
     private String mAuthorName;
     private String uid;
@@ -50,8 +52,8 @@ public class NewPostFragment extends DialogFragment {
                 if (!post.isEmpty()) {
                     // Make post anonymous if requested
                     if (anonymous.isChecked()) {
-                        uid = "anonymous";
-                        mAuthorName = "Anonymous Poster";
+                        uid = defUID;
+                        mAuthorName = defPoster;
                     }
 
                     // Build post object
@@ -61,7 +63,7 @@ public class NewPostFragment extends DialogFragment {
 
                     // Post new post to firestore
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.collection("posts")
+                    db.collection(collection)
                             .document(newPost.authorID + "+" + newPost.time)
                             .set(newPost, SetOptions.merge());
 

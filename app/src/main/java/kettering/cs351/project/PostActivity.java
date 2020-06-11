@@ -23,6 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static kettering.cs351.project.Constants.*;
+
 public class PostActivity extends AppCompatActivity {
     private Post mPost;
 
@@ -32,7 +34,7 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         Intent launcher = getIntent();
-        mPost = (Post) launcher.getSerializableExtra("post");
+        mPost = (Post) launcher.getSerializableExtra(postExtra);
 
         // Set Post text
         TextView postText = findViewById(R.id.postText);
@@ -47,9 +49,9 @@ public class PostActivity extends AppCompatActivity {
         cal.setTimeInMillis(mPost.time);
         SimpleDateFormat format;
         if (cal.getTime().getDate() == Calendar.getInstance().getTime().getDate())
-            format = new SimpleDateFormat("h:mm a", Locale.getDefault());
+            format = new SimpleDateFormat(todayFormat, Locale.getDefault());
         else
-            format = new SimpleDateFormat("M/d/yy, h:mm a", Locale.getDefault());
+            format = new SimpleDateFormat(oldLongFormat, Locale.getDefault());
         TextView postTime = findViewById(R.id.postTime);
         postTime.setText(format.format(cal.getTime()));
 
@@ -61,7 +63,7 @@ public class PostActivity extends AppCompatActivity {
 
         // Handle new comments
         final String name = getSharedPreferences(getString(R.string.author), Context.MODE_PRIVATE)
-                .getString(getString(R.string.author), "Anonymous Commenter");
+                .getString(getString(R.string.author), defCommenter);
 
         final TextInputLayout input = findViewById(R.id.newCommentInput);
         input.setEndIconDrawable(R.drawable.send);
@@ -146,12 +148,12 @@ public class PostActivity extends AppCompatActivity {
     public void onBackPressed() {
         // Send updated post back to PostListActivity
         Intent output = new Intent();
-        output.putExtra("post", mPost);
+        output.putExtra(postExtra, mPost);
         setResult(RESULT_OK, output);
 
         // Post updated post to firestore
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("posts")
+        db.collection(collection)
                 .document(mPost.authorID + "+" + mPost.time)
                 .set(mPost, SetOptions.merge());
 

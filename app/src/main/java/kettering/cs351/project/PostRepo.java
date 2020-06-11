@@ -13,15 +13,16 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static kettering.cs351.project.Constants.*;
+
 public class PostRepo implements Serializable {
     private final String TAG = "PostRepo";
-    public final String POST_COLLECTION = "posts";
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public ArrayList<Post> posts = new ArrayList<>();
 
     public PostRepo(final OnCompleteCallback callback) {
         // Get all posts from Firestore
-        db.collection(POST_COLLECTION)
+        db.collection(collection)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

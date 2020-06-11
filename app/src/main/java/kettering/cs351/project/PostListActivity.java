@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
+import static kettering.cs351.project.Constants.*;
+
 public class PostListActivity extends AppCompatActivity
         implements NewPostFragment.OnPostCallback, PostListAdapter.PostClickCallback {
     private String TAG = "PostListActivity";
@@ -30,7 +32,7 @@ public class PostListActivity extends AppCompatActivity
 
         // Get the list of posts from launch activity
         Intent launcher = getIntent();
-        mPosts = (ArrayList<Post>) launcher.getSerializableExtra("posts");
+        mPosts = (ArrayList<Post>) launcher.getSerializableExtra(listExtra);
 
         // Build the recyclerview to display posts
         mList = (RecyclerView) findViewById(R.id.postList);
@@ -40,7 +42,7 @@ public class PostListActivity extends AppCompatActivity
         mList.setAdapter(mAdapter);
 
         final String name = getSharedPreferences(getString(R.string.author), Context.MODE_PRIVATE)
-                .getString(getString(R.string.author), "Anonymous Poster");
+                .getString(getString(R.string.author), defPoster);
 
         final NewPostFragment.OnPostCallback callback = this;
         // Setup new post FAB
@@ -50,7 +52,7 @@ public class PostListActivity extends AppCompatActivity
             public void onClick(View v) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 NewPostFragment postWindow = new NewPostFragment(name, callback);
-                postWindow.show(transaction, "New Post");
+                postWindow.show(transaction, postTransact);
             }
         });
     }
@@ -70,14 +72,14 @@ public class PostListActivity extends AppCompatActivity
     @Override
     public void onPostClick(int position) {
         Intent intent = new Intent(this, PostActivity.class);
-        intent.putExtra("post", mPosts.get(position));
-        startActivityForResult(intent, 420);
+        intent.putExtra(postExtra, mPosts.get(position));
+        startActivityForResult(intent, postReturn);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 420 && resultCode == RESULT_OK && data != null) {
-            final Post updated = (Post) data.getSerializableExtra("post");
+            final Post updated = (Post) data.getSerializableExtra(postExtra);
 
             // Remove post that got updated
             mPosts.removeIf(new Predicate<Post>() {

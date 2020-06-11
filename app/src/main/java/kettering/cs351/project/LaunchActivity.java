@@ -17,6 +17,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import static kettering.cs351.project.Constants.*;
+
 public class LaunchActivity extends AppCompatActivity implements PostRepo.OnCompleteCallback {
     private final String TAG = "LaunchActivity";
     private FirebaseAuth mAuth;
@@ -87,7 +89,7 @@ public class LaunchActivity extends AppCompatActivity implements PostRepo.OnComp
                         edit.apply();
                         // Now that repo has fetched all posts, start the post list activity
                         Intent intent = new Intent(context, PostListActivity.class);
-                        intent.putExtra("posts", mRepo.posts);
+                        intent.putExtra(listExtra, mRepo.posts);
                         startActivity(intent);
                     }
                 }
@@ -95,7 +97,7 @@ public class LaunchActivity extends AppCompatActivity implements PostRepo.OnComp
         } else {
             // Now that repo has fetched all posts, start the post list activity
             Intent intent = new Intent(context, PostListActivity.class);
-            intent.putExtra("posts", mRepo.posts);
+            intent.putExtra(listExtra, mRepo.posts);
             startActivity(intent);
         }
 

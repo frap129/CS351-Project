@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static kettering.cs351.project.Constants.*;
+
 public class CommentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final String TAG = "PostListAdapter";
     private LayoutInflater mInflater;
@@ -60,9 +62,9 @@ public class CommentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             cal.setTimeInMillis(comment.time);
             SimpleDateFormat format;
             if (cal.getTime().getDate() == Calendar.getInstance().getTime().getDate())
-                format = new SimpleDateFormat("h:mm a", Locale.getDefault());
+                format = new SimpleDateFormat(todayFormat, Locale.getDefault());
             else
-                format = new SimpleDateFormat("M/d/yy", Locale.getDefault());
+                format = new SimpleDateFormat(oldShortFormat, Locale.getDefault());
             TextView commentTime = holder.itemView.findViewById(R.id.commentTime);
             commentTime.setText(format.format(cal.getTime()));
         } catch (JSONException e) {
