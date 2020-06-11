@@ -10,10 +10,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import static kettering.cs351.project.Constants.collection;
+import static kettering.cs351.project.Constants.sortByNew;
 
 public class PostRepo implements Serializable {
     private final String TAG = "PostRepo";
@@ -36,13 +36,7 @@ public class PostRepo implements Serializable {
                         }
 
                         // Sort posts by newest to oldest
-                        posts.sort(new Comparator<Post>() {
-                            @Override
-                            public int compare(Post o1, Post o2) {
-                                return Long.compare(o2.time, o1.time);
-                            }
-                        });
-
+                        posts.sort(sortByNew);
                         // Execute callback to inform of completion.
                         callback.FirestoreGetComplete();
                     }

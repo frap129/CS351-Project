@@ -1,5 +1,7 @@
 package kettering.cs351.project;
 
+import java.util.Comparator;
+
 public final class Constants {
     // Numbers
     public static final int postListSizeLimit = 280;
@@ -17,4 +19,11 @@ public final class Constants {
     public static final String oldShortFormat = "M/d/yy";
     public static final String oldLongFormat = "h:mm a, M/d/yy";
 
+    // Other
+    public static final Comparator<Post> sortByNew = new Comparator<Post>() {
+        @Override
+        public int compare(Post o1, Post o2) {
+            return Long.compare(o2.time, o1.time);
+        }
+    };
 }

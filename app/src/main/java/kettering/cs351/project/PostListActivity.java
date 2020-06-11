@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.function.Predicate;
 
 import static kettering.cs351.project.Constants.defPoster;
@@ -22,6 +21,7 @@ import static kettering.cs351.project.Constants.listExtra;
 import static kettering.cs351.project.Constants.postExtra;
 import static kettering.cs351.project.Constants.postReturn;
 import static kettering.cs351.project.Constants.postTransact;
+import static kettering.cs351.project.Constants.sortByNew;
 
 public class PostListActivity extends AppCompatActivity
         implements NewPostFragment.OnPostCallback, PostListAdapter.PostClickCallback {
@@ -64,12 +64,7 @@ public class PostListActivity extends AppCompatActivity
     @Override
     public void PostComplete(Post newPost) {
         mPosts.add(newPost);
-        mPosts.sort(new Comparator<Post>() {
-            @Override
-            public int compare(Post o1, Post o2) {
-                return Long.compare(o2.time, o1.time);
-            }
-        });
+        mPosts.sort(sortByNew);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -97,12 +92,7 @@ public class PostListActivity extends AppCompatActivity
             mPosts.add(updated);
 
             // Sort list to maintain the same order
-            mPosts.sort(new Comparator<Post>() {
-                @Override
-                public int compare(Post o1, Post o2) {
-                    return Long.compare(o2.time, o1.time);
-                }
-            });
+            mPosts.sort(sortByNew);
             mAdapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);
