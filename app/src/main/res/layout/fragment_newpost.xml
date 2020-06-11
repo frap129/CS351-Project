@@ -23,6 +23,25 @@
             android:layout_marginVertical="@dimen/postItemVertMargin"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/anonymousText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/postItemVertMargin"
+        android:layout_marginHorizontal="@dimen/postItemSideMargin"
+        android:text="Post Anonymously"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header" />
+
+    <Switch
+        android:id="@+id/anonymousSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/postItemVertMargin"
+        android:layout_marginHorizontal="@dimen/postItemSideMargin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/newPostInput"
         android:layout_width="match_parent"
@@ -32,7 +51,7 @@
         app:endIconMode="custom"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintTop_toBottomOf="@id/anonymousText"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText

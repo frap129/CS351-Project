@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,10 +21,13 @@ import java.util.Calendar;
 
 public class NewPostFragment extends DialogFragment {
     private String mAuthorName;
+    private String uid;
     private OnPostCallback mCallback;
+
     public NewPostFragment(String name, OnPostCallback callback) {
         mAuthorName = name;
         mCallback = callback;
+        uid = FirebaseAuth.getInstance().getUid();
     }
 
     @NonNull
@@ -35,20 +39,33 @@ public class NewPostFragment extends DialogFragment {
         final AlertDialog dialog = builder.create();
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog);
 
+        // Setup posting related views
         final TextInputLayout input = fragment.findViewById(R.id.newPostInput);
+        final Switch anonymous = fragment.findViewById(R.id.anonymousSwitch);
         input.setEndIconDrawable(R.drawable.send);
         input.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String post = input.getEditText().getText().toString();
                 if (!post.isEmpty()) {
+                    // Make post anonymous if requested
+                    if (anonymous.isChecked()) {
+                        uid = "anonymous";
+                        mAuthorName = "Anonymous Poster";
+                    }
+
+                    // Build post object
+                    Post newPost = new Post(mAuthorName, uid, new ArrayList<String>(),
+                            new ArrayList<String>(), post, Calendar.getInstance().getTimeInMillis(),
+                            new ArrayList<String>());
+
+                    // Post new post to firestore
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    Post newPost = new Post(mAuthorName, FirebaseAuth.getInstance().getUid(),
-                            new ArrayList<String>(), new ArrayList<String>(), post,
-                            Calendar.getInstance().getTimeInMillis(), new ArrayList<String>());
                     db.collection("posts")
                             .document(newPost.authorID + "+" + newPost.time)
                             .set(newPost, SetOptions.merge());
+
+                    // Go back to PostListActivity
                     dialog.dismiss();
                     mCallback.PostComplete(newPost);
                 }
