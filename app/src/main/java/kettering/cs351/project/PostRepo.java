@@ -51,8 +51,8 @@ public class PostRepo implements Serializable {
     // Simple function to build a Post object from a Firebase Document Snapshot
     private Post documentToPost(QueryDocumentSnapshot doc) {
         return new Post((String) doc.get("author"), (String) doc.get("authorID"),
-                doc.getLong("dislikes").intValue(), doc.getLong("likes").intValue(), (String) doc.get("post"),
-                doc.getLong("time"),  (List<String>) doc.get("comments"));
+                (List<String>) doc.get("dislikes"), (List<String>) doc.get("likes"),
+                (String) doc.get("post"), doc.getLong("time"),  (List<String>) doc.get("comments"));
     }
 
     // Callback interface for notifying when fetch is complete

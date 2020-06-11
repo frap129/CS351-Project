@@ -43,8 +43,8 @@ public class NewPostFragment extends DialogFragment {
                 String post = input.getEditText().getText().toString();
                 if (!post.isEmpty()) {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    Post newPost = new Post(mAuthorName,
-                            FirebaseAuth.getInstance().getUid(), 0, 0, post,
+                    Post newPost = new Post(mAuthorName, FirebaseAuth.getInstance().getUid(),
+                            new ArrayList<String>(), new ArrayList<String>(), post,
                             Calendar.getInstance().getTimeInMillis(), new ArrayList<String>());
                     db.collection("posts")
                             .document(newPost.authorID + "+" + newPost.time)

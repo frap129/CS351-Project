@@ -2,8 +2,11 @@ package kettering.cs351.project;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -12,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -55,6 +59,7 @@ public class PostActivity extends AppCompatActivity {
         final CommentListAdapter adapter = new CommentListAdapter(this, mPost.comments);
         list.setAdapter(adapter);
 
+        // Handle new comments
         final String name = getSharedPreferences(getString(R.string.author), Context.MODE_PRIVATE)
                 .getString(getString(R.string.author), "Anonymous Commenter");
 
@@ -71,6 +76,67 @@ public class PostActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                     input.getEditText().setText("");
                 }
+            }
+        });
+
+
+        final String uid = FirebaseAuth.getInstance().getUid();
+        final int enabledColor = getColor(R.color.colorAccent);
+        final int disabledColor = Color.BLACK;
+
+        // Setup Like button and resources
+        final TextView likeCount = findViewById(R.id.likeCount);
+        likeCount.setText(String.valueOf(mPost.likes.size()));
+        final ImageButton likeButton = findViewById(R.id.likeButton);
+        final Drawable like = getDrawable(R.drawable.like);
+        likeButton.setImageDrawable(like);
+        if (!mPost.likes.isEmpty() && mPost.likes.contains(uid))
+            like.setTint(enabledColor);
+
+        // Setup dislikes and resources
+        final TextView dislikeCount = findViewById(R.id.dislikeCount);
+        dislikeCount.setText(String.valueOf(mPost.dislikes.size()));
+        final ImageButton dislikeButton = findViewById(R.id.dislikeButton);
+        final Drawable dislike = getDrawable(R.drawable.dislike);
+        dislikeButton.setImageDrawable(dislike);
+        if (!mPost.dislikes.isEmpty() && mPost.dislikes.contains(uid))
+            dislike.setTint(enabledColor);
+
+        // Handle button clicks
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPost.likes.contains(uid)) {
+                    mPost.likes.remove(uid);
+                    like.setTint(disabledColor);
+                } else {
+                    if (mPost.dislikes.contains(uid)) {
+                        mPost.dislikes.remove(uid);
+                        dislike.setTint(disabledColor);
+                    }
+                    mPost.likes.add(uid);
+                    like.setTint(enabledColor);
+                }
+                likeCount.setText(String.valueOf(mPost.likes.size()));
+                dislikeCount.setText(String.valueOf(mPost.dislikes.size()));
+            }
+        });
+        dislikeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPost.dislikes.contains(uid)) {
+                    mPost.dislikes.remove(uid);
+                    dislike.setTint(disabledColor);
+                } else {
+                    if (mPost.likes.contains(uid)) {
+                        mPost.likes.remove(uid);
+                        like.setTint(disabledColor);
+                    }
+                    mPost.dislikes.add(uid);
+                    dislike.setTint(enabledColor);
+                }
+                likeCount.setText(String.valueOf(mPost.likes.size()));
+                dislikeCount.setText(String.valueOf(mPost.dislikes.size()));
             }
         });
 
