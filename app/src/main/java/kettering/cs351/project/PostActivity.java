@@ -65,13 +65,9 @@ public class PostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String comment = input.getEditText().getText().toString();
                 if (!comment.isEmpty()) {
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
                     Comment newComment = new Comment(name, Calendar.getInstance().getTimeInMillis(),
                             comment);
                     mPost.comments.add(newComment.toString());
-                    db.collection("posts")
-                            .document(mPost.authorID + "+" + mPost.time)
-                            .set(mPost, SetOptions.merge());
                     adapter.notifyDataSetChanged();
                     input.getEditText().setText("");
                 }
@@ -82,9 +78,18 @@ public class PostActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        // Send updated post back to PostListActivity
         Intent output = new Intent();
         output.putExtra("post", mPost);
         setResult(RESULT_OK, output);
+
+        // Post updated post to firestore
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("posts")
+                .document(mPost.authorID + "+" + mPost.time)
+                .set(mPost, SetOptions.merge());
+
+        // Exit the activity as requested
         finish();
     }
 }
