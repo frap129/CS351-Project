@@ -49,7 +49,10 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         // Set Post text
         TextView postText = holder.itemView.findViewById(R.id.postText);
-        postText.setText(post.post);
+        String trimmedPost = post.post.substring(0, Math.min(post.post.length(), 280));
+        if (post.post.length() > 280)
+            trimmedPost += "...";
+        postText.setText(trimmedPost);
 
         // Set post author
         TextView postAuthor = holder.itemView.findViewById(R.id.postAuthor);
