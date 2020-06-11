@@ -18,7 +18,7 @@
             android:textStyle="bold"
             android:textAlignment="center"
             android:text="New Post"
-            android:textColor="@android:color/primary_text_light"
+            android:textColor="@android:color/white"
             android:textSize="20sp"
             android:layout_marginVertical="@dimen/postItemVertMargin"/>
     </LinearLayout>
