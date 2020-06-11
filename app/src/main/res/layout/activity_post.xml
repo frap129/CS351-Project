@@ -116,6 +116,7 @@
         android:layout_height="wrap_content"
         android:hint="Comment"
         android:layout_marginVertical="@dimen/postItemVertMargin"
+        android:background="@android:color/white"
         app:endIconMode="custom"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
